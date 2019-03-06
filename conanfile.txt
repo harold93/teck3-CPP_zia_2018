@@ -1,5 +1,6 @@
 [requires]
 boost/1.68.0@conan/stable
+pugixml/1.9@bincrafters/stable
 
 [generators]
 cmake
