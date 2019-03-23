@@ -211,9 +211,9 @@ public:
 	Stage &disconnect() { return disconnection_; }
 
 private:
+	Stage connection_;
 	Stage request_;
 	Stage chunks_;
-	Stage connection_;
 	Stage disconnection_;
 };
 

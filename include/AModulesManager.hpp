@@ -46,7 +46,7 @@ public:
 	 */
 	StageManager &getStageManager() { return stageManager_; }
 
-private:
+protected:
 	StageManager stageManager_;
 };
 

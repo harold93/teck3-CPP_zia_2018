@@ -46,9 +46,13 @@ add_executable(zia
 		src/components/server/Server.cpp
 		src/components/server/Server.h
 		src/components/server/TcpConnection.cpp
-		src/components/server/TcpConnection.h)
+		src/components/server/TcpConnection.h src/services/ManagerServer.cpp src/services/ManagerServer.h++ src/services/ModulesManager.cpp src/services/ModulesManager.hpp)
 
-target_link_libraries(zia ${CONAN_LIBS})
+## shared lids
+#set(LIB_SRC src/modules/log.cpp)
+#add_library(log SHARED ${LIB_SRC})
+
+target_link_libraries(zia ${CONAN_LIBS} -ldl)
 
 if (WIN32)
 	set_target_properties(zia
