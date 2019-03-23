@@ -4,8 +4,10 @@
 
 #include "Server.h"
 
-Server::Server(boost::asio::io_service &io_service, int port, int entityHeader)
-        : _acceptor(io_service, tcp::endpoint(tcp::v4(), port)), _entityHeader(entityHeader)
+Server::Server(boost::asio::io_service &io_service, ModulesManager &modulesManager, int port, int entityHeader)
+        : _acceptor(io_service, tcp::endpoint(tcp::v4(), port)),
+          _modulesManager(modulesManager),
+          _entityHeader(entityHeader)
 {
     _accept();
 }
@@ -28,8 +30,13 @@ void Server::_accept()
 void Server::_handleAccept(TcpConnection::pointer newConnection,
                    const boost::system::error_code& error)
 {
-    if (!error) {
-        newConnection->start();
-        _accept();
+    if (error ||
+        (boost::asio::error::eof == error) ||
+        (boost::asio::error::connection_reset == error)) {
+        // handle the disconnect.
+    } else {
+        // when connected read the data
+        _modulesManager.callHooksConnection(newConnection->getSocket().native_handle());
+        newConnection->start(&_modulesManager);
     }
 }

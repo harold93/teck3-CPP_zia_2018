@@ -14,6 +14,10 @@ public:
     void loadModules(const std::string &directoryPath) override;
     void loadOneModule(const std::string &filePath) override;
     void unloadModule(const std::string &moduleName) override;
+    void callHooksConnection(int);
+
+private:
+    dems::Context _context;
 };
 
 #endif //ZIA_MODULESMANAGER_HPP

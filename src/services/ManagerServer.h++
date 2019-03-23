@@ -19,7 +19,7 @@ public:
 private:
     parseXml _parser;
     std::string _pathConfiguration;
-    ModulesManager _modulesManager;
+//    ModulesManager _modulesManager;
 };
 
 

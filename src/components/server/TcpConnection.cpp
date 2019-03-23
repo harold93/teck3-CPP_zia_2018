@@ -9,8 +9,9 @@ tcp::socket& TcpConnection::getSocket()
     return _socket;
 }
 
-void TcpConnection::start(const int entityHeader)
+void TcpConnection::start(ModulesManager *modulesManager, const int entityHeader)
 {
+    _modulesManager = modulesManager;
     _socket.async_receive(boost::asio::buffer(_buff, entityHeader), 0,
         boost::bind(
                 &TcpConnection::_handleRead, shared_from_this(),
@@ -36,7 +37,7 @@ void TcpConnection::_handleRead(const boost::system::error_code & error, size_t 
             ));
         _socket.close();
         std::fill(_buff.begin(), _buff.end(), 0);
-        this->start();
+        this->start(_modulesManager);
     } else {
         // deconnetion et rm pointeur TcpConnection
         std::cerr << "maybe error or a deconnection TcpConnection::test\n";

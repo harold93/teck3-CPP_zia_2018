@@ -9,13 +9,17 @@
 
 #include <vector>
 #include "TcpConnection.h"
+#include "../../services/ModulesManager.hpp"
 
 /**
  * Server TCP
  */
 class Server {
 public:
-    Server(boost::asio::io_service &, int port = 80, int entityHeader = 8000);
+    Server(boost::asio::io_service &,
+            ModulesManager &,
+            int port = 80,
+            int entityHeader = 8000);
 private:
     void _accept();
     void _handleAccept(TcpConnection::pointer,
@@ -23,6 +27,7 @@ private:
     tcp::acceptor _acceptor;
     std::vector<TcpConnection::pointer> _clients;
     int _entityHeader;
+    ModulesManager &_modulesManager;
 };
 
 

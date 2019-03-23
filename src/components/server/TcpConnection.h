@@ -15,6 +15,7 @@
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/asio.hpp>
 #include <boost/array.hpp>
+#include "../../services/ModulesManager.hpp"
 
 using boost::asio::ip::tcp;
 
@@ -22,7 +23,7 @@ class TcpConnection : public boost::enable_shared_from_this<TcpConnection> {
 public:
     typedef boost::shared_ptr<TcpConnection> pointer;
     tcp::socket& getSocket();
-    void start(const int = 8000);
+    void start(ModulesManager *, const int = 8000);
     static pointer create(boost::asio::io_service& io_service)
     {
         return pointer(new TcpConnection(io_service));
@@ -42,6 +43,7 @@ private:
     tcp::socket _socket;
     std::string _message;
     std::array<char, 8000>          _buff;
+    ModulesManager *_modulesManager;
 };
 
 

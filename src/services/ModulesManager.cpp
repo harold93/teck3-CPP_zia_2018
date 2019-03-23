@@ -20,3 +20,17 @@ void ModulesManager::loadOneModule(const std::string &filePath)
 void ModulesManager::unloadModule(const std::string &moduleName)
 {}
 
+void ModulesManager::callHooksConnection(int socket)
+{
+    _context.socketFd = socket;
+    for (auto &[idx, hook] : stageManager_.connection().firstHooks()) {
+        hook.callback(_context);
+    }
+    for (auto &[idx, hook] : stageManager_.connection().middleHooks()) {
+        hook.callback(_context);
+    }
+    for (auto &[idx, hook] : stageManager_.connection().endHooks()) {
+        hook.callback(_context);
+    }
+}
+

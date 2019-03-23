@@ -13,7 +13,11 @@ extern "C" {
 //            std::cout << "I'm an example module" << std::endl;
 //            return dems::CodeStatus::OK;
 //        });
-        std::cout << " test module log \n";
+        manager.connection().hookToFirst(0, MODULE_NAME, [](dems::Context &ctx) {
+            std::cout << "\nI'm an example module\n\n" << std::endl;
+            return dems::CodeStatus::OK;
+        });
+//        std::cout << " test module log \n";
         return MODULE_NAME;
     }
 };

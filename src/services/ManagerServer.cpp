@@ -23,14 +23,15 @@ void ManagerServer::init()
         auto modules = _parser.getModules();
         if (it != item.end() && !it->second.empty()) {
             // run server on thread
+            ModulesManager modulesManager;
+
             std::cout << "A server on port: " << it->second << '\n';
             for (auto module : modules) {
-                _modulesManager.loadOneModule("./sharedModules/" + module + ".so");
+                modulesManager.loadOneModule("./sharedModules/" + module + ".so");
             }
 
             boost::asio::io_service io_service;
-            Server server(io_service, std::stoi(it->second));
-
+            Server server(io_service, modulesManager, std::stoi(it->second));
             io_service.run();
         } else {
             std::cout << "port is missing in file " << entry.path() << '\n';
