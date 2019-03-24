@@ -83,8 +83,15 @@ const std::string ModulesManager::getData() noexcept
 //        _context.rawData.push_back((u_int8_t)c);
 //    }
 
-    for (auto &&c : _context.rawData) {
-        data.push_back(c);
-    }
+////  send data from rawData
+//    for (auto &&c : _context.rawData) {
+//        data.push_back(c);
+//    }
+
+    //send data from header::HTTPMessage response
+    dems::header::Response  firstLine = std::get<dems::header::Response>(_context.response.firstLine);
+    data += firstLine.httpVersion + ' ' + firstLine.statusCode + ' ' + firstLine.message + '\n';
+    data += _context.response.headers->getWholeHeaders() + '\n';
+    data += _context.response.body;
     return data;
 }
