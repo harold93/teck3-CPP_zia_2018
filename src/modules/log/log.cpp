@@ -14,7 +14,7 @@ extern "C" {
 //            return dems::CodeStatus::OK;
 //        });
         manager.connection().hookToFirst(0, MODULE_NAME, [](dems::Context &ctx) {
-            std::cout << "\nI'm an example module\n\n" << std::endl;
+            std::cout << "\nI'm an example module\n" << std::endl;
             return dems::CodeStatus::OK;
         });
 //        std::cout << " test module log \n";

@@ -19,7 +19,7 @@ public:
     Server(boost::asio::io_service &,
             ModulesManager &,
             int port = 80,
-            int entityHeader = 8000);
+            int entityHeader = SIZE_BUFF_HTTP);
 private:
     void _accept();
     void _handleAccept(TcpConnection::pointer,

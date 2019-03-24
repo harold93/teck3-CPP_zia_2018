@@ -29,7 +29,6 @@ void ManagerServer::init()
             for (auto module : modules) {
                 modulesManager.loadOneModule("./sharedModules/" + module + ".so");
             }
-
             boost::asio::io_service io_service;
             Server server(io_service, modulesManager, std::stoi(it->second));
             io_service.run();

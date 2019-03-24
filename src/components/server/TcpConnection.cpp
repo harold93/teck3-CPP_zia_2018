@@ -23,12 +23,16 @@ void TcpConnection::start(ModulesManager *modulesManager, const int entityHeader
 void TcpConnection::_handleRead(const boost::system::error_code & error, size_t bytesTransferred)
 {
     if (!error) {
+        _modulesManager->callHooksRequest(_buff.data());
         std::cout << _buff.data();
         std::cout << "byte received: " << bytesTransferred << '\n';
+        // test sending data
         std::string res;
         res += "HTTP/1.1 200 OK\n";
         res += "Server: Zia\n\n";
-        res += "hello world lol";
+        res += "hello world";
+        res = _modulesManager->getData();
+        std::cout << "sending: \n" << res << '\n';
         _socket.async_send(boost::asio::buffer(res, res.size()),
             boost::bind(
                    &TcpConnection::_handleWrite, shared_from_this(),
@@ -39,8 +43,15 @@ void TcpConnection::_handleRead(const boost::system::error_code & error, size_t 
         std::fill(_buff.begin(), _buff.end(), 0);
         this->start(_modulesManager);
     } else {
-        // deconnetion et rm pointeur TcpConnection
-        std::cerr << "maybe error or a deconnection TcpConnection::test\n";
+        // deconnetion
+        if (error == boost::asio::error::connection_reset ||
+            error == boost::asio::error::bad_descriptor ||
+            error == boost::asio::error::eof) {
+            _modulesManager->callHooksDisconnection();
+            std::cout << "deconnection: " << error << "\n\n";
+        } else {
+            std::cerr << "maybe error or a deconnection TcpConnection::_handleRead\n\n";
+        }
     }
 }
 

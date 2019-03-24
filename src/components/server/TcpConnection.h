@@ -6,6 +6,7 @@
 //#define ZIA_TCPCONNECTION_H
 
 #pragma once
+# define SIZE_BUFF_HTTP 8000
 
 #include <ctime>
 #include <iostream>
@@ -23,7 +24,7 @@ class TcpConnection : public boost::enable_shared_from_this<TcpConnection> {
 public:
     typedef boost::shared_ptr<TcpConnection> pointer;
     tcp::socket& getSocket();
-    void start(ModulesManager *, const int = 8000);
+    void start(ModulesManager *, const int = SIZE_BUFF_HTTP);
     static pointer create(boost::asio::io_service& io_service)
     {
         return pointer(new TcpConnection(io_service));
@@ -42,7 +43,7 @@ private:
 
     tcp::socket _socket;
     std::string _message;
-    std::array<char, 8000>          _buff;
+    std::array<char, SIZE_BUFF_HTTP>          _buff;
     ModulesManager *_modulesManager;
 };
 

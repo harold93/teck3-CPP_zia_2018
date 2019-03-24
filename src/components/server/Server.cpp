@@ -34,9 +34,11 @@ void Server::_handleAccept(TcpConnection::pointer newConnection,
         (boost::asio::error::eof == error) ||
         (boost::asio::error::connection_reset == error)) {
         // handle the disconnect.
+        std::cout << "deconnection ou erreur: " << error << '\n';
     } else {
         // when connected read the data
         _modulesManager.callHooksConnection(newConnection->getSocket().native_handle());
         newConnection->start(&_modulesManager);
     }
+    _accept();
 }

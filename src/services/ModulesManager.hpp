@@ -15,7 +15,10 @@ public:
     void loadOneModule(const std::string &filePath) override;
     void unloadModule(const std::string &moduleName) override;
     void callHooksConnection(int);
-
+//    void callHooksRequest(std::array<char, 8000>);
+    void callHooksRequest(const char *);
+    void callHooksDisconnection();
+    const std::string getData() noexcept;
 private:
     dems::Context _context;
 };
