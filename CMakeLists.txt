@@ -46,7 +46,13 @@ add_executable(zia
 		src/components/server/Server.cpp
 		src/components/server/Server.h
 		src/components/server/TcpConnection.cpp
-		src/components/server/TcpConnection.h src/services/ManagerServer.cpp src/services/ManagerServer.h++ src/services/ModulesManager.cpp src/services/ModulesManager.hpp)
+		src/components/server/TcpConnection.h
+		src/services/ManagerServer.cpp
+		src/services/ManagerServer.h++
+		src/services/ModulesManager.cpp
+		src/services/ModulesManager.hpp
+		src/services/HeaderManager.cpp
+		src/services/HeaderManager.hpp)
 
 ## shared lids
 #set(LIB_SRC src/modules/log.cpp)
