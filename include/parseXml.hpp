@@ -20,8 +20,8 @@ private:
     pugi::xml_parse_result _result;
     pugi::xml_document _doc;
     pugi::xml_node _conf;
-    std::map<const std::string,const std::string> _params;
-    std::vector<const std::string> _modules;
+    std::map<std::string,std::string> _params;
+    std::vector<std::string> _modules;
 public:
     parseXml() {
     }
@@ -41,11 +41,11 @@ public:
     }
     ~parseXml() {};
 
-    const std::map<const std::string, const std::string> getParams() noexcept {
+    const std::map< std::string, std::string> getParams() noexcept {
         return _params;
     }
 
-    const std::vector<const std::string> getModules() noexcept {
+    const std::vector<std::string> getModules() noexcept {
         return _modules;
     }
 };

@@ -2,6 +2,6 @@
 <server>
   <!--<Ip>127.0.0.1</Ip>-->
   <Port>1212</Port>
-  <Module>log</Module>
-  <!--<Module>http</Module>-->
+  <Module>http</Module>
+  <Module>resp</Module>
 </server>
