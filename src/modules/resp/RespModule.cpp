@@ -1,7 +1,7 @@
 
+#include <iostream>
 #include "RespModule.hpp"
 #include "HeaderManager.hpp"
-#include <iostream>
 
 static constexpr char MODULE_NAME[] = "Logger";
 
@@ -11,7 +11,7 @@ void RespMain(dems::Context &ctx) {
   //ctx.rawData.push_back("HTTP/1.1");
   //ctx.rawData.clear();  
   res.httpVersion = "HTTP/1.1";
-  res.message = "Zia server";
+  res.message = "OK";
   res.statusCode = "200";
   ctx.response.body="Zia Project";
   ctx.response.firstLine = res;
