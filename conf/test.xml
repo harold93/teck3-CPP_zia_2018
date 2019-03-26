@@ -3,5 +3,4 @@
   <!--<Ip>127.0.0.1</Ip>-->
   <Port>1212</Port>
   <Module>resp</Module>
-  <Module>php</Module>
 </server>
