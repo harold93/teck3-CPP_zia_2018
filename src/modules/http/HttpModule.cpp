@@ -70,20 +70,20 @@ std::string registerHooks(dems::StageManager &manager)
 {
   manager.request().hookToFirst(0, MODULE_NAME, [](dems::Context &ctx) {
     HttpMain(ctx);
-    std::cout << ctx.response.body << std::endl;
+//    std::cout << ctx.response.body << std::endl;
     return dems::CodeStatus::OK;
   });
-
-  manager.request().hookToMiddle(0, MODULE_NAME, [](dems::Context &ctx) {
-    std::cout << ctx.response.body << std::endl;
-    return dems::CodeStatus::OK;
-  });
-
-  manager.request().hookToEnd(0, MODULE_NAME, [](dems::Context &ctx) {
-    std::cout << ctx.response.body << std::endl;
-    return dems::CodeStatus::OK;
-  });
-  std::cout << "Http OK" << '\n';
+//
+//  manager.request().hookToMiddle(0, MODULE_NAME, [](dems::Context &ctx) {
+//    std::cout << ctx.response.body << std::endl;
+//    return dems::CodeStatus::OK;
+//  });
+//
+//  manager.request().hookToEnd(0, MODULE_NAME, [](dems::Context &ctx) {
+//    std::cout << ctx.response.body << std::endl;
+//    return dems::CodeStatus::OK;
+//  });
+//  std::cout << "Http OK" << '\n';
   return MODULE_NAME;
 }
 };

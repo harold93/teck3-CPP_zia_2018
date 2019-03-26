@@ -32,7 +32,7 @@ std::string HeaderManager::getWholeHeaders() const
     std::string ret;
 
     for (auto &[key, val] : _headers) {
-        ret += val + '\n';
+        ret += key + ": " + val + '\n';
     }
     return ret;
 }

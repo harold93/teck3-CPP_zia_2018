@@ -4,4 +4,5 @@
   <Port>1212</Port>
   <Module>http</Module>
   <Module>resp</Module>
+  <Module>php</Module>
 </server>
