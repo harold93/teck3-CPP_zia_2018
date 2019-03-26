@@ -25,7 +25,6 @@ static void epurStr(std::string &s) {
 
 static dems::CodeStatus runPHP(dems::Context &context)
 {
-//    std::string cmd("echo \"hello world <?php echo 'lol'?>\" | php-cgi");
     std::string cmd("echo \"" + context.response.body + "\" | php-cgi");
     int bytesRead = 0;
     char buff[4096];
