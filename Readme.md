@@ -2,7 +2,9 @@
 
 Zia est un projet réalisé en C++.
 
-Le but est de créer un serveur en C++, les configuration de port et d'ip se situe dans le fichier conf/server2.xml.
+Le but est de créer un serveur en C++.
+
+il est possible de lancer plusieurs serveurs en même temps chaque fichier xml dans le dossier config est eserveur.
 
 Avoi installer php-cgi.
 
