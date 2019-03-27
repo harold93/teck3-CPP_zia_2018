@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server>
+  <!--<Ip>127.0.0.1</Ip>-->
+  <Port>1111</Port>
+  <Module>resp</Module>
+</server>

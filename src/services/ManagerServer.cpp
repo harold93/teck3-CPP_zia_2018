@@ -16,24 +16,35 @@ ManagerServer::~ManagerServer()
 void ManagerServer::init()
 {
     for (auto &entry : boost::filesystem::directory_iterator(_pathConfiguration)) {
-        _parser.parse(entry.path().c_str());
-
-        auto &item = _parser.getParams();
-        auto it = item.find("port");
-        auto modules = _parser.getModules();
-        if (it != item.end() && !it->second.empty()) {
-            // run server on thread
-            ModulesManager modulesManager;
-
-            std::cout << "A server on port: " << it->second << '\n';
-            for (auto module : modules) {
-                modulesManager.loadOneModule("./sharedModules/" + module + ".so");
-            }
-            boost::asio::io_service io_service;
-            Server server(io_service, modulesManager, std::stoi(it->second));
-            io_service.run();
-        } else {
-            std::cout << "port is missing in file " << entry.path() << '\n';
-        }
+        std::string path = entry.path().c_str();
+        _threadPoll.emplace_back(std::thread(&ManagerServer::runServer, this, path));
     }
+    for (auto &thread : _threadPoll) {
+        thread.join();
+    }
+}
+
+void ManagerServer::runServer(std::string path)
+{
+    std::unique_lock<std::mutex> lk(_locker);
+    _parser.parse(path);
+
+    auto &item = _parser.getParams();
+    auto it = item.find("port");
+    auto modules = _parser.getModules();
+    if (it != item.end() && !it->second.empty()) {
+        ModulesManager modulesManager;
+
+        std::cout << "\nA server on port: " << it->second << '\n';
+        for (auto module : modules) {
+            modulesManager.loadOneModule("./sharedModules/" + module + ".so");
+        }
+        boost::asio::io_service io_service;
+        Server server(io_service, modulesManager, std::stoi(it->second));
+        lk.unlock();
+        io_service.run();
+    } else {
+        std::cout << "port is missing in file " << path << '\n';
+    }
+    lk.unlock();
 }

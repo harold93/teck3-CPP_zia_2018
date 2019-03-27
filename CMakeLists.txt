@@ -58,7 +58,7 @@ add_executable(zia
 #set(LIB_SRC src/modules/log.cpp)
 #add_library(log SHARED ${LIB_SRC})
 
-target_link_libraries(zia ${CONAN_LIBS} -ldl)
+target_link_libraries(zia ${CONAN_LIBS} -ldl -pthread)
 
 if (WIN32)
 	set_target_properties(zia

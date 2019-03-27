@@ -28,6 +28,7 @@ public:
     void parse(const std::string file)
     {
         _modules.clear();
+        _params.clear();
         _result = _doc.load_file(file.c_str()) == 0 ? throw : _result;
         _conf = _doc.child("server");
         _params.insert(std::make_pair("ip", _conf.child_value("Ip")));

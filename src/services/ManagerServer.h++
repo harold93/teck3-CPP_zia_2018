@@ -7,6 +7,7 @@
 
 #include <map>
 #include <boost/filesystem.hpp>
+#include <thread>
 #include "parseXml.hpp"
 #include "ModulesManager.hpp"
 
@@ -17,8 +18,11 @@ public:
     ~ManagerServer();
     void init();
 private:
+    void runServer(std::string);
     parseXml _parser;
     std::string _pathConfiguration;
+    std::vector<std::thread> _threadPoll;
+    std::mutex _locker;
 //    ModulesManager _modulesManager;
 };
 
