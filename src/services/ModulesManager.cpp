@@ -12,18 +12,22 @@ void ModulesManager::loadModules(const std::string &/*directoryPath*/)
 void ModulesManager::loadOneModule(const std::string &filePath)
 {
     void* handle = dlopen(filePath.c_str(), RTLD_LAZY);
+    if (handle == NULL) {
+        std::cout << "error when loading: " << filePath.c_str() << '\n';
+        return;
+    }
     auto registerHooks = (TypeRegisterHooks)dlsym(handle, "registerHooks");
     if (registerHooks == NULL) {
-        std::cout << "error when loading: " << filePath.c_str() << '\n';
+        std::cout << "error when loading: registerHooks from " << filePath.c_str() << '\n';
         return;
     } else {
         std::cout << "loading: " << filePath.c_str() << '\n';
-    }
-    registerHooks(stageManager_);
+        registerHooks(stageManager_);
 
-    dems::config::ConfigValue config;
-    config.v = "none";
-    _context.config[filePath] = config;
+        dems::config::ConfigValue config;
+        config.v = "none";
+        _context.config[filePath] = config;
+    }
 }
 
 void ModulesManager::unloadModule(const std::string &/*moduleName*/)
@@ -94,9 +98,15 @@ const std::string ModulesManager::getData() noexcept
 //    }
 
     //send data from header::HTTPMessage response
-    dems::header::Response  firstLine = std::get<dems::header::Response>(_context.response.firstLine);
-    data += firstLine.httpVersion + ' ' + firstLine.statusCode + ' ' + firstLine.message + '\n';
-    data += _context.response.headers->getWholeHeaders() + '\n';
-    data += _context.response.body;
+    auto entry = _context.config.find("./sharedModules/resp.so");
+    if (entry == _context.config.end()) {
+        data = "HTTP/1.1 200 OK\nServer: Zia\n\nyou must enable module resp ";
+        data += "if you want to see our website ! (In the file of configuration placed in folder ./conf";
+    } else {
+        dems::header::Response  firstLine = std::get<dems::header::Response>(_context.response.firstLine);
+        data += firstLine.httpVersion + ' ' + firstLine.statusCode + ' ' + firstLine.message + '\n';
+        data += _context.response.headers->getWholeHeaders() + '\n';
+        data += _context.response.body;
+    }
     return data;
 }
