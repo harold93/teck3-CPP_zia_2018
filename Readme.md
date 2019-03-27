@@ -1,4 +1,5 @@
-﻿ZIA
+﻿
+ZIA
 
 Zia est un projet réalisé en C++.
 
@@ -11,6 +12,12 @@ Avoi installer php-cgi.
 sudo apt install php-cgi
 
 Le projet est Cross Plateforme Linux - MacOs
+
+MOdule disponible:
+
+- ssl
+- php
+- resp
 
 La commande pour le build est : 
 
