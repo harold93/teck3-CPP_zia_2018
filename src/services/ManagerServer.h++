@@ -5,6 +5,7 @@
 #ifndef ZIA_MANAGERSERVER_H
 #define ZIA_MANAGERSERVER_H
 
+#include <mutex>
 #include <map>
 #include <boost/filesystem.hpp>
 #include <thread>

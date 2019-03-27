@@ -4,7 +4,7 @@ SRC 		=	SSLModule.cpp
 
 OBJ 		= 	$(SRC:.cpp=.o)
 
-CXXFLAGS 	= -g3 -W -Wall -fPIC -I ../../../include -std=c++17 -dynamiclib -flat_namespace
+CXXFLAGS 	= -g3 -W -Wall -fPIC -I ../../../include -std=c++17
 
 LDFLAGS 	= -shared -fPIC -L/usr/local/opt/openssl/lib #-L/usr/local/ssl/lib
 LDLIBS		= -lssl -lcrypto
