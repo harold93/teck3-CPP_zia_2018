@@ -11,9 +11,14 @@ void ModulesManager::loadModules(const std::string &/*directoryPath*/)
 
 void ModulesManager::loadOneModule(const std::string &filePath)
 {
-    std::cout << "load: " << filePath.c_str() << '\n';
     void* handle = dlopen(filePath.c_str(), RTLD_LAZY);
     auto registerHooks = (TypeRegisterHooks)dlsym(handle, "registerHooks");
+    if (registerHooks == NULL) {
+        std::cout << "error when loading: " << filePath.c_str() << '\n';
+        return;
+    } else {
+        std::cout << "loading: " << filePath.c_str() << '\n';
+    }
     registerHooks(stageManager_);
 
     dems::config::ConfigValue config;
